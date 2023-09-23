@@ -1,8 +1,8 @@
 const { describe, expect, it } = require('@jest/globals');
-const ServiceAvaliacao = require('../src/services/avaliacao.js')
+const ServiceExercicios = require('../src/services/exercicios.js')
 
-describe('Testes da avaliacao', () => {
-    const service = new ServiceAvaliacao()
+describe('Testes dos Exercicios', () => {
+    const service = new ServiceExercicios()
 
     beforeAll(async () => {
         console.info('Iniciando TDD com Jest!');
@@ -12,23 +12,12 @@ describe('Testes da avaliacao', () => {
         console.info('Testes Encerrados!');
     });
 
-    // ============================= SOMAR ============================= //
-    it('Should sum [numA] with [numB] and show the [result]', () => {
-        const result = service.Somar(2,3)
+    // ============================= NOMES ============================= //
+    it('Should add a name', () => {
+        const valueBefore = service.GetNomes().length
+        service.Add("João")
+        const valueAfter = service.GetNomes().length
 
-        expect(result).toBe(5)
-    })
-
-    // ERROR
-    it('Should ERROR', () => {
-        const result = () => service.Somar(2,"batata")
-        
-        expect(result).toThrowError("Parâmetros inválidos")
-    })
-
-    it('Should ERROR', () => {
-        const result = () => service.Somar("batata",2)
-        
-        expect(result).toThrowError("Parâmetros inválidos")
+        expect(valueAfter).toBe(valueBefore+1)
     })
 })
