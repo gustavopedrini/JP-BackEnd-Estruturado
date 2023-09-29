@@ -3,12 +3,12 @@ const repositorie = new RepostiorieExercicios()
 
 class ServiceExercicios{
 
-    GetNome(index){
-        if(isNaN(index)){
+    async GetNome(id){
+        if(isNaN(id)){
             throw new Error('Parâmetro inválido')
         }
 
-        return repositorie.GetNome(index);
+        return repositorie.GetNome(id);
     }
 
     Add(nome){

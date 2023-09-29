@@ -20,4 +20,10 @@ describe('Testes dos Exercicios', () => {
 
         expect(valueAfter).toBe(valueBefore+1)
     })
+
+    it('Shoul sum twtw', async () => {
+        const result = await service.GetNome(1)
+
+        expect(result.nome).toBe('João da Silva')
+    })
 })

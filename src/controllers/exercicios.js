@@ -3,9 +3,9 @@ const service = new ServiceExercicios();
 
 class ControllerExercicios{
 
-    GetNome(req, res){
+    async GetNome(req, res){
         try{
-            const resultado = service.GetNome(req.params.index)
+            const resultado = await service.GetNome(req.params.id)
             res.status(200).json({
                 nomes: resultado
             })

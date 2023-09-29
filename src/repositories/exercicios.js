@@ -1,9 +1,12 @@
 const nomes = new Array("Alpha", "Beta", "Charlie")
+const Pessoa = require('../models/exercicios')
 
 class RepostiorieExercicios{
 
-    GetNome(index){
-        return nomes[index]
+    async GetNome(id){
+        return Pessoa.findOne({
+            where: { id }
+        })
     }
 
     Add(nome){
