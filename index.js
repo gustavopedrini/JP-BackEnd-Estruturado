@@ -1,10 +1,8 @@
 const express = require('express')
-const router = require('./src/routes/exercicios.js')
-const Pessoa = require('./src/models/exercicios');
+const router = require('./src/routes/pessoa')
 
 const app = express()
 const port = 3000
-new Pessoa()
 
 app.use(express.json())
 app.use(router)

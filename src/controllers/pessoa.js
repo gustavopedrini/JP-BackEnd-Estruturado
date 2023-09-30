@@ -1,7 +1,7 @@
-const ServiceExercicios = require('../services/exercicios.js');
-const service = new ServiceExercicios();
+const ServicePessoa = require('../services/pessoa.js');
+const service = new ServicePessoa();
 
-class ControllerExercicios{
+class ControllerPessoa{
 
     async GetNome(req, res){
         try{
@@ -18,9 +18,9 @@ class ControllerExercicios{
         }
     }
 
-    Add(req, res){
+    async GetPessoas(_, res){
         try{
-            const resultado = service.Add(req.body.nome)
+            const resultado = await service.GetPessoas()
             res.status(200).json({
                 nomes: resultado
             })
@@ -33,11 +33,26 @@ class ControllerExercicios{
         }
     }
 
-    GetNomes(_, res){
+    async Add(req, res){
         try{
-            const resultado = service.GetNomes()
+            const resultado = await service.Add(req.body.nome, req.body.email, req.body.senha)
             res.status(200).json({
-                nomes: resultado
+                adicionado: resultado
+            })
+            
+        }catch(error){
+            console.log(error)
+            res.status(500).json({
+                message: error
+            })
+        }
+    }
+
+    async Update(req, res){
+        try{
+            const resultado = await service.Update(req.body.nome, req.body.email, req.body.senha, req.params.id)
+            res.status(200).json({
+                alterado: resultado
             })
 
         }catch(error){
@@ -48,24 +63,9 @@ class ControllerExercicios{
         }
     }
 
-    Update(req, res){
+    async Delete(req,res){
         try{
-            const resultado = service.Update(req.body.nome, req.params.index)
-            res.status(200).json({
-                nomes: resultado
-            })
-
-        }catch(error){
-            console.log(error)
-            res.status(500).json({
-                message: error
-            })
-        }
-    }
-
-    Delete(req,res){
-        try{
-            const resultado = service.Delete(req.params.index)
+            const resultado = await service.Delete(req.params.id)
             res.status(200).json({
                 nomes: resultado
             })
@@ -78,4 +78,4 @@ class ControllerExercicios{
     }
 }
 
-module.exports = ControllerExercicios
+module.exports = ControllerPessoa
