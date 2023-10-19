@@ -1,4 +1,5 @@
 const Pessoa = require('../models/pessoa')
+const bcrypt = require("bcrypt")
 
 class RepostioriePessoa{
 
@@ -8,11 +9,23 @@ class RepostioriePessoa{
         })
     }
 
+    async GetPessoaPorEmail(email){
+        return Pessoa.findOne({
+            where: { email }
+        })
+    }
+
     async GetPessoas(){
         return Pessoa.findAll()
     }
 
     async Add(nome, email, senha){
+        const hashSenha = await bcrypt.hash(pessoa.senha, 10)
+
+        const result = await Pessoa.create(
+            {...pessoa, senha: hashSenha} // quebra a variavel
+        )
+
         Pessoa.create({
             nome: nome,
             email: email,

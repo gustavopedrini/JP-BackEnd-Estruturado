@@ -1,7 +1,46 @@
 const ServicePessoa = require('../services/pessoa.js');
+const bcrypt = require("bcrypt")
+const jwt = require('jsonwebtoken')
+const config = require('../config')
 const service = new ServicePessoa();
 
 class ControllerPessoa{
+
+    async Login(req, res){ 
+        const {email, senha} = req.body; // mesma coisa que fazer: ( const email = req.body.email; | const senha = req.body.senha ), porém tudo em uma linha.
+
+        if(!email || !senha){
+            res.status(401).json({
+                message: "E-mail ou senha inválido"
+            })
+        }
+
+        const { dataValues: pessoa} = await service.GetPessoaPorEmail(email)
+
+        if(!pessoa){
+            res.status(401).json({
+                message: "E-mail ou senha inválido"
+            })
+        }
+        
+        if(!(await bcrypt.compare(senha, pessoa.senha))){
+            res.status(401).json({
+                message: "E-mail ou senha inválido"
+            })
+        }
+
+        const token = jwt.sign({ // passar permissão aqui (desafio)
+            id: pessoa.id,
+            email: pessoa.email,
+            nome: pessoa.nome
+        },
+            config.secret
+        )
+
+        res.json({
+            token
+        })
+    }
 
     async GetNome(req, res){
         try{

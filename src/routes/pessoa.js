@@ -1,13 +1,15 @@
-const express = require('express')
-const ControllerPessoa = require('../controllers/pessoa.js')
+const express = require('express');
+const ControllerExercicio = require('../controllers/pessoa');
+const authMiddleware = require('../middleware/auth');
 
-const controller = new ControllerPessoa()
-const router = express.Router()
+const controller = new ControllerExercicio();
+const router = express.Router();
 
-router.get('/api/nome/:id', controller.GetNome)
-router.post('/api/pessoa', controller.Add)
-router.post('/api/pessoas', controller.GetPessoas)
-router.put('/api/pessoa/:id', controller.Update)
-router.delete('/api/pessoa/:id', controller.Delete)
+router.post('/api/login', controller.Login)
+router.get('/api/nome/:id', authMiddleware, controller.GetNome)
+router.post('/api/pessoa', authMiddleware, controller.Add)
+router.post('/api/pessoas', authMiddleware, controller.GetPessoas)
+router.put('/api/pessoa/:id', authMiddleware, controller.Update)
+router.delete('/api/pessoa/:id', authMiddleware, controller.Delete)
 
 module.exports = router

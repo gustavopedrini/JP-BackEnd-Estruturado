@@ -11,6 +11,10 @@ class ServicePessoa{
         return repositorie.GetNome(id);
     }
 
+    async GetPessoaPorEmail(email){
+        return repositorie.GetPessoaPorEmail(email)
+    }
+
     async GetPessoas(){
         return repositorie.GetPessoas();
     }
